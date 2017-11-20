@@ -1,13 +1,16 @@
-
+<div *ngIf="cooldown">
+        <div id="cooldown-overlay">
+            <div id="cooldown-text">{{secondsRemaining}}</div>
+        </div>        
+</div>
 <div *ngIf="!pixels" >No connection right now</div>
 
-<div *ngIf="!cooldown">
-        <div class="row"  *ngFor="let row of pixels; let ir = index">
-                <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
-                   {{col}}
-                  </div>
+    <div class="row"  *ngFor="let row of pixels; let ir = index">
+            <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
+            {{col}}
             </div>
-</div>
+    </div>
+
 
 <div class="row">
     <div (click)="selectedColor=1" class="square-red" [ngClass]="{'square-selected' : selectedColor == 1}">

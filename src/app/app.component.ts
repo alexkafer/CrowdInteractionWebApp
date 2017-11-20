@@ -12,9 +12,10 @@ export class AppComponent implements OnInit {
 
   public pixels = null;
   private selectedColor = 1;
-  private cooldown = false;
 
-  private coolDownRemaining = 0;
+  private cooldown = false;
+  private cooldowntime = 0;
+  private secondsRemaining = 5;
 
   private ws = new $WebSocket("ws://10.128.105.83:8080");
 
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
   public toggleColor(row, col) {
 
     this.cooldown = true;
+    this.cooldowntime = Date.now() + 5000;
     setTimeout(() => this.cooldown = false, 5000);
 
     this.pixels[row][col] = this.selectedColor;
@@ -59,9 +61,11 @@ export class AppComponent implements OnInit {
       (msg: MessageEvent)=> {
           let message = JSON.parse(msg.data);
           console.log("onMessage ", message);
-          // this.pixels[message.row][message.col] = message.color;
+           this.pixels[message.row][message.col] = message.color;
       },
       {autoApply: false}
   ); 
+
+   setInterval(() => this.secondsRemaining = this.cooldowntime ? Math.floor((this.cooldowntime - Date.now())/1000) : 5, 1000)
   }
 }

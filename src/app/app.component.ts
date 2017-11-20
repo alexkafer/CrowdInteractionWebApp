@@ -16,11 +16,11 @@ export class AppComponent implements OnInit {
 
   private coolDownRemaining = 0;
 
-  private ws = new $WebSocket("ws://localhost:8080");
+  private ws = new $WebSocket("ws://10.128.105.83:8080");
 
   ngOnInit(): void {
     // Make the HTTP request:
-     this.http.get('http://localhost:8000').subscribe(data => {
+     this.http.get('http://10.128.105.83:8000').subscribe(data => {
       // Read the result field from the JSON response.
       this.pixels = data;
       console.log(data);
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
     this.cooldown = true;
     setTimeout(() => this.cooldown = false, 5000);
-    
+
     this.pixels[row][col] = this.selectedColor;
 
     let colorPackage = {

@@ -3,10 +3,53 @@
     color: white;
     height: 8.33vw;
 }
-.red {
+.color-1 {
     background: red;
 }
 
-.green {
+.color-2 {
     background: green;
+}
+
+.square-red {
+    background: red;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+}
+
+.square-green {
+    background: green;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+}
+
+.square-black {
+    background: black;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+}
+
+.square-selected {
+    border: blue;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.light {
+    width: 8.1%;
 }

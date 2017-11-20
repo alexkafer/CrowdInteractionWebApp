@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
-  private selectedColor = 2;
+  private selectedColor = 1;
 
   // private ws = new $WebSocket("ws://10.139.148.40:8080");
 

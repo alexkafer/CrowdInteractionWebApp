@@ -1,5 +1,17 @@
 <div class="row" *ngFor="let row of pixels; let ir = index">
-    <div class="col-sm-1 dark" *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" [ngClass]="{'red': col}">
+    <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
        {{col}}
       </div>
+</div>
+
+<div class="row">
+    <div (click)="selectedColor=1" class="square-red" [ngClass]="{'square-selected' : selectedColor == 1}">
+        <img/>
+    </div>
+    <div (click)="selectedColor=2" class="square-green" [ngClass]="{'square-selected' : selectedColor == 2}">
+        <img/>
+    </div>
+    <div (click)="selectedColor=0" class="square-black" [ngClass]="{'square-selected' : selectedColor == 0}">
+        <img/>
+    </div>
 </div>

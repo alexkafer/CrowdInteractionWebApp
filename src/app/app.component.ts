@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
   private selectedColor = 1;
+  private cooldown = false;
 
   // private ws = new $WebSocket("ws://10.139.148.40:8080");
 
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit {
   }
 
   public toggleColor(row, col) {
+    this.cooldown = true;
+    setTimeout(() => this.cooldown = false, 5000);
+
     this.pixels[row][col] = this.selectedColor;
 
     let colorPackage = {

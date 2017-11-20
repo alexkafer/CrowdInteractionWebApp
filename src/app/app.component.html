@@ -1,7 +1,9 @@
-<div class="row" *ngFor="let row of pixels; let ir = index">
-    <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
-       {{col}}
-      </div>
+<div *ngIf="!cooldown">
+        <div class="row"  *ngFor="let row of pixels; let ir = index">
+                <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
+                   {{col}}
+                  </div>
+            </div>
 </div>
 
 <div class="row">

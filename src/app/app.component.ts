@@ -66,6 +66,6 @@ export class AppComponent implements OnInit {
       {autoApply: false}
   ); 
 
-   setInterval(() => this.secondsRemaining = this.cooldowntime ? Math.floor((this.cooldowntime - Date.now())/1000) : 5, 1000)
+   setInterval(() => this.secondsRemaining = this.cooldown ? Math.floor((this.cooldowntime - Date.now())/1000) : 5, 1000)
   }
 }

@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   public pixels = null;
   private selectedColor = 1;
+  private cooldown = false;
 
   private coolDownRemaining = 0;
 
@@ -27,7 +28,10 @@ export class AppComponent implements OnInit {
   }
 
   public toggleColor(row, col) {
-    this.coolDownRemaining = 5;
+
+    this.cooldown = true;
+    setTimeout(() => this.cooldown = false, 5000);
+    
     this.pixels[row][col] = this.selectedColor;
 
     let colorPackage = {

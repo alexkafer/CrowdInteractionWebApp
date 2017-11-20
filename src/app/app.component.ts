@@ -10,26 +10,24 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  public pixels = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ]
+  public pixels = null;
   private selectedColor = 1;
 
-  // private ws = new $WebSocket("ws://10.139.148.40:8080");
+  private coolDownRemaining = 0;
+
+  private ws = new $WebSocket("ws://localhost:8080");
 
   ngOnInit(): void {
     // Make the HTTP request:
-    /* this.http.get('http://localhost:8080/pixels').subscribe(data => {
+     this.http.get('http://localhost:8000').subscribe(data => {
       // Read the result field from the JSON response.
       this.pixels = data;
-    }); */
+      console.log(data);
+    });
   }
 
   public toggleColor(row, col) {
+    this.coolDownRemaining = 5;
     this.pixels[row][col] = this.selectedColor;
 
     let colorPackage = {
@@ -38,7 +36,7 @@ export class AppComponent implements OnInit {
       color: this.selectedColor
     }
 
-    /* this.ws.send(colorPackage).subscribe(
+    this.ws.send(colorPackage).subscribe(
       (msg)=> {
           console.log("next", msg.data);
       },
@@ -48,18 +46,18 @@ export class AppComponent implements OnInit {
       ()=> {
           console.log("complete");
       }
-    ); */
+    );
   } 
 
   constructor(private http: HttpClient) {
 
-    /*this.ws.onMessage(
+    this.ws.onMessage(
       (msg: MessageEvent)=> {
           let message = JSON.parse(msg.data);
           console.log("onMessage ", message);
-          this.pixels[message.row][message.col] = message.color;
+          // this.pixels[message.row][message.col] = message.color;
       },
       {autoApply: false}
-  ); */
+  ); 
   }
 }

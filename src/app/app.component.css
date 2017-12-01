@@ -42,6 +42,7 @@
     left: 0;
     right: 0;
     margin: 5px auto;
+    color: white;
 }
 
 .square-selected {
@@ -76,4 +77,11 @@
     color: white;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+}
+
+.box {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    text-align: center;
 }

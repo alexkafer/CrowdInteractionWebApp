@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {$WebSocket} from 'angular2-websocket/angular2-websocket'
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,19 +12,25 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   public pixels = null;
-  private selectedColor = 1;
+  public mode = null;
 
-  private cooldown = false;
+  public selectedColor = 1;
+
+  public cooldown = false;
   private cooldowntime = 0;
   private secondsRemaining = 5;
 
-  private ws = new $WebSocket("ws://10.128.105.83:8080");
+  public placeInLine = 0;
+  public totalInLine = 0;
+
+  private ws = new $WebSocket("ws://10.128.111.165:8080");
 
   ngOnInit(): void {
-    // Make the HTTP request:
-     this.http.get('http://10.128.105.83:8000').subscribe(data => {
+     // Make the HTTP request:
+     this.http.get('http://10.128.111.165:8000').subscribe((data:any) => {
       // Read the result field from the JSON response.
-      this.pixels = data;
+      this.pixels = data.pixels;
+      this.mode = data.mode;
       console.log(data);
     });
   }
@@ -37,6 +44,7 @@ export class AppComponent implements OnInit {
     this.pixels[row][col] = this.selectedColor;
 
     let colorPackage = {
+      type: "pixel_touch",
       row: row, 
       col: col, 
       color: this.selectedColor
@@ -61,11 +69,62 @@ export class AppComponent implements OnInit {
       (msg: MessageEvent)=> {
           let message = JSON.parse(msg.data);
           console.log("onMessage ", message);
-           this.pixels[message.row][message.col] = message.color;
+          switch(message.type) {
+            case "pixel_update": 
+              this.pixels = message.pixels;
+              break;
+            case "mode_change":
+              this.mode = message.mode;
+              break;
+            case "personal_update":
+              console.log("Personal Update!")
+              this.placeInLine = message.place;
+              break;
+          }
+           
       },
       {autoApply: false}
   ); 
 
    setInterval(() => this.secondsRemaining = this.cooldown ? Math.floor((this.cooldowntime - Date.now())/1000) : 5, 1000)
   }
+
+  public moveUp() {
+    let colorPackage = {
+      type: "button_press",
+      button: 1
+    }
+
+    this.ws.send(colorPackage).subscribe(
+      (msg)=> {
+          console.log("next", msg.data);
+      },
+      (msg)=> {
+          console.log("error", msg);
+      },
+      ()=> {
+          console.log("complete");
+      }
+    );
+  }
+
+  public moveDown() {
+    let colorPackage = {
+      type: "button_press",
+      button: 0
+    }
+
+    this.ws.send(colorPackage).subscribe(
+      (msg)=> {
+          console.log("next", msg.data);
+      },
+      (msg)=> {
+          console.log("error", msg);
+      },
+      ()=> {
+          console.log("complete");
+      }
+    );
+  }
+
 }

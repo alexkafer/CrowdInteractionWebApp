@@ -11,6 +11,16 @@
     background: green;
 }
 
+.color-3 {
+    background: repeating-linear-gradient(
+        0deg,
+        red,
+        red 10px,
+        green 10px,
+        green 20px
+      );
+}
+
 .square-red {
     background: red;
     width: 100px;
@@ -35,6 +45,24 @@
 
 .square-black {
     background: black;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 5px auto;
+    color: white;
+}
+
+.square-both {
+    background: repeating-linear-gradient(
+        0deg,
+        red,
+        red 10px,
+        green 10px,
+        green 20px
+      );
     width: 100px;
     height: 100px;
     top: 0;

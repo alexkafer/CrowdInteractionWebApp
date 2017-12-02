@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
   public placeInLine = 0;
   public totalInLine = 0;
 
-  private ws = new $WebSocket("ws://54.89.142.238:8080");
+  private ws = new $WebSocket("ws://ec2-54-89-142-238.compute-1.amazonaws.com:8080");
 
   ngOnInit(): void {
      // Make the HTTP request:
-     this.http.get('http://54.89.142.238:8000').subscribe((data:any) => {
+     this.http.get('http://ec2-54-89-142-238.compute-1.amazonaws.com').subscribe((data:any) => {
       // Read the result field from the JSON response.
       this.pixels = data.pixels;
       this.mode = data.mode;

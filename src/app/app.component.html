@@ -3,7 +3,7 @@
             <div id="cooldown-text">{{secondsRemaining}}</div>
         </div>        
 </div>
-<div *ngIf="!pixels" >No connection right now. Did Alex fuck something up again?</div>
+<div *ngIf="!pixels">Welcome to the CSE Winter Light Show! There doesn't appear to be a connection at the moment. Please refresh and try again.</div>
 
     <div class="row"  *ngFor="let row of pixels; let ir = index">
             <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >

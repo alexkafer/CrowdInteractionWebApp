@@ -1,0 +1,26 @@
+.dark {
+    background: black;
+    color: white;
+    height: 8.33vw;
+}
+.color-1 {
+    background: red;
+}
+
+.color-2 {
+    background: green;
+}
+
+.color-3 {
+    background: repeating-linear-gradient(
+        0deg,
+        red,
+        red 10px,
+        green 10px,
+        green 20px
+      );
+}
+
+.light {
+    width: 8.1%;
+}

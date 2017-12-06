@@ -1,48 +1,11 @@
-<div *ngIf="cooldown">
-        <div id="cooldown-overlay">
-            <div id="cooldown-text">{{secondsRemaining}}</div>
-        </div>        
-</div>
-<div *ngIf="!pixels">Welcome to the CSE Winter Light Show! There doesn't appear to be a connection at the moment. Please refresh and try again.</div>
 
-    <div class="row"  *ngFor="let row of pixels; let ir = index">
-            <div *ngFor="let col of row; let ic = index"  (click)="toggleColor(ir, ic)" class="light dark color-{{col}}" >
+<div *ngIf="!connected()">
+    Welcome to the CSE Winter Light Show! There doesn't appear to be a connection at the moment. Please refresh and try again.
+</div>
+
+<ng-template appModeDisplay>
         
-            </div>
-    </div>
+</ng-template>
 
 {{mode}}
-<div class="row" *ngIf="mode=='places'">
-    <div (click)="selectedColor=1" class="square-red" [ngClass]="{'square-selected' : selectedColor == 1}">
-        <img/>
-    </div>
-    <div (click)="selectedColor=2" class="square-green" [ngClass]="{'square-selected' : selectedColor == 2}">
-        <img/>
-    </div>
-    <div (click)="selectedColor=3" class="square-both" [ngClass]="{'square-selected' : selectedColor == 3}">
-            <img/>
-        </div>
-    <div (click)="selectedColor=0" class="square-black" [ngClass]="{'square-selected' : selectedColor == 0}">
-        <img/>
-    </div>
-</div>
-
-<div class="row" *ngIf="mode=='testing'">
-   We are currently testing the lights. Please stand by!
-</div>
-
-<div class="row" *ngIf="mode=='pong'" > 
-        <div class="d-pad">
-                <div class="square-black" (click)="moveUp()">
-                    Up
-                </div>
-                <div class="square-black" (click)="moveDown()">
-                    Down
-                </div>
-        </div>
-        <div>
-                There is currently a line to play this game. 
-                You are {{ placeInLine }} in line. This game only uses the first two players. Don't refresh or you'll loose your place in line. 
-            </div>
-</div>
 

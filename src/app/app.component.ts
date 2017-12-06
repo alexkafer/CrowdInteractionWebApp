@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {$WebSocket} from 'angular2-websocket/angular2-websocket'
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild, ComponentFactoryResolver, AfterViewInit } from '@angular/core';
+import { PixelManagerService } from './pixel-manager.service';
+import { ModeDisplayDirective } from './mode-display.directive';
+import { PlacesComponent } from './places/places.component';
+import { PongComponent } from './pong/pong.component';
+import { TestingComponent } from './testing/testing.component';
 
 
 @Component({
@@ -8,123 +11,43 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   title = 'app';
+  mode = '';
 
-  public pixels = null;
-  public mode = null;
+  @ViewChild(ModeDisplayDirective) modeHost: ModeDisplayDirective;
 
-  public selectedColor = 1;
+  loadGame(game) {
 
-  public cooldown = false;
-  private cooldowntime = 0;
-  private secondsRemaining = 5;
+    this.mode = game;
 
-  public placeInLine = 0;
-  public totalInLine = 0;
-
-  private ws = new $WebSocket("ws://ec2-54-89-142-238.compute-1.amazonaws.com:8080");
-
-  ngOnInit(): void {
-     // Make the HTTP request:
-     this.http.get('http://ec2-54-89-142-238.compute-1.amazonaws.com').subscribe((data:any) => {
-      // Read the result field from the JSON response.
-      this.pixels = data.pixels;
-      this.mode = data.mode;
-      console.log(data);
-    });
-  }
-
-  public toggleColor(row, col) {
-
-    this.cooldown = true;
-    this.cooldowntime = Date.now() + 5000;
-    setTimeout(() => this.cooldown = false, 5000);
-
-    this.pixels[row][col] = this.selectedColor;
-
-    let colorPackage = {
-      type: "pixel_touch",
-      row: row, 
-      col: col, 
-      color: this.selectedColor
+    let games = {
+      places: PlacesComponent,
+      pong: PongComponent,
+      testing: TestingComponent
     }
+    
+    var component = games[game];
 
-    this.ws.send(colorPackage).subscribe(
-      (msg)=> {
-          console.log("next", msg.data);
-      },
-      (msg)=> {
-          console.log("error", msg);
-      },
-      ()=> {
-          console.log("complete");
-      }
-    );
-  } 
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    let viewContainerRef = this.modeHost.viewContainerRef;
+    viewContainerRef.clear();
 
-  constructor(private http: HttpClient) {
-
-    this.ws.onMessage(
-      (msg: MessageEvent)=> {
-          let message = JSON.parse(msg.data);
-          console.log("onMessage ", message);
-          switch(message.type) {
-            case "pixel_update": 
-              this.pixels = message.pixels;
-              break;
-            case "mode_change":
-              this.mode = message.mode;
-              break;
-            case "personal_update":
-              console.log("Personal Update!")
-              this.placeInLine = message.place;
-              break;
-          }
-           
-      },
-      {autoApply: false}
-  ); 
-
-   setInterval(() => this.secondsRemaining = this.cooldown ? Math.floor((this.cooldowntime - Date.now())/1000) : 5, 1000)
+    let componentRef = viewContainerRef.createComponent(componentFactory);
+    // (<AppComponent>componentRef.instance).data = adItem.data;
   }
 
-  public moveUp() {
-    let colorPackage = {
-      type: "button_press",
-      button: 1
+  ngAfterViewInit() {
+    if (this.px.mode) {
+      this.px.mode.subscribe((mode => this.loadGame(mode)));
     }
-
-    this.ws.send(colorPackage).subscribe(
-      (msg)=> {
-          console.log("next", msg.data);
-      },
-      (msg)=> {
-          console.log("error", msg);
-      },
-      ()=> {
-          console.log("complete");
-      }
-    );
   }
 
-  public moveDown() {
-    let colorPackage = {
-      type: "button_press",
-      button: 0
-    }
-
-    this.ws.send(colorPackage).subscribe(
-      (msg)=> {
-          console.log("next", msg.data);
-      },
-      (msg)=> {
-          console.log("error", msg);
-      },
-      ()=> {
-          console.log("complete");
-      }
-    );
+  constructor(private px: PixelManagerService, private componentFactoryResolver: ComponentFactoryResolver) {
+    this.px.init();
   }
 
+  public connected() {
+    return this.px.state() == WebSocket.OPEN;
+  }
 }

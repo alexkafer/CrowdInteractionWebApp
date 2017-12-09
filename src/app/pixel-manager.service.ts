@@ -12,7 +12,8 @@ export class PixelManagerService {
   public pixels = new BehaviorSubject<any>([]); // = 'places';
   public mode = new Subject<string>(); // = 'places';
 
-  private ws = new $WebSocket("ws://ec2-18-220-127-31.us-east-2.compute.amazonaws.com:8000");
+  // private ws = new $WebSocket("ws://ec2-18-220-127-31.us-east-2.compute.amazonaws.com:8000");
+  private ws = new $WebSocket("ws://localhost:8000");
 
   constructor(private http: HttpClient) { 
     this.ws.onMessage(
@@ -33,7 +34,8 @@ export class PixelManagerService {
 
   public init() {
     // Make the initial HTTP request to populate data:
-    this.http.get('http://ec2-18-220-127-31.us-east-2.compute.amazonaws.com')
+    // this.http.get('http://ec2-18-220-127-31.us-east-2.compute.amazonaws.com')
+    this.http.get('http://localhost:8080')
     .subscribe(
       (data: any) => {
         this.pixels.next(data.pixels);
@@ -51,9 +53,27 @@ export class PixelManagerService {
   public state() {
     return this.ws.getReadyState();
   }
-  
+
   public retry() {
     return this.ws.reconnect();
+  }
+
+  public intendToPlay() {
+    let playPackage = {
+      type: "play_intent"
+    }
+
+    this.ws.send(playPackage).subscribe(
+      (msg)=> {
+          console.log("next", msg.data);
+      },
+      (msg)=> {
+          console.log("error", msg);
+      },
+      ()=> {
+          console.log("complete");
+      }
+    );
   }
 
   public sendPixelTouch(row, col, color) {

@@ -1,9 +1,22 @@
-Places!
 <div *ngIf="cooldown">
     <div id="cooldown-overlay">
         <div id="cooldown-text">{{secondsRemaining}}</div>
     </div>        
 </div>
+
+<p>
+        Control the light show 'netlights' with your phone.
+    </p>
+    <hr>
+    <p>
+        <strong>How it works:</strong> 
+        Select a color at the bottom of the screen and click anywhere on the grid. Your color should display on the netlights immediately.
+    </p>
+    <hr>
+    <p>
+        <strong> The twist:</strong> 
+        you can only set a color once every 5 seconds. 
+    </p>
 
 <app-pixels></app-pixels>
 
@@ -14,10 +27,10 @@ Places!
     <div (click)="selectedColor=2" class="square-green" [ngClass]="{'square-selected' : selectedColor == 2}">
         <img/>
     </div>
-    <div (click)="selectedColor=3" class="square-both" [ngClass]="{'square-selected' : selectedColor == 3}">
+    <div (click)="selectedColor=(3)" class="square-both" [ngClass]="{'square-selected' : selectedColor == 3}">
             <img/>
         </div>
-    <div (click)="selectedColor=0" class="square-black" [ngClass]="{'square-selected' : selectedColor == 0}">
+    <div (click)="selectedColor=(0)" class="square-black" [ngClass]="{'square-selected' : selectedColor == 0}">
         <img/>
     </div>
 </div>

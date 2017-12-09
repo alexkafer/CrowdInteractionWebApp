@@ -10,8 +10,8 @@ import { PixelsComponent } from './pixels/pixels.component';
 import { TestingComponent } from './testing/testing.component';
 import { ModeDisplayDirective } from './mode-display.directive';
 import { PixelManagerService } from './pixel-manager.service';
+import { GamingLandingComponent } from './gaming-landing/gaming-landing.component';
 
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -20,19 +20,19 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
     PlacesComponent,
     PixelsComponent,
     TestingComponent,
-    ModeDisplayDirective
+    ModeDisplayDirective,
+    GamingLandingComponent
   ],
   imports: [
     BrowserModule, 
-    HttpClientModule,
-    MatButtonModule,
-    MatCheckboxModule
+    HttpClientModule
   ],
   providers: [PixelManagerService],
   bootstrap: [AppComponent],
   entryComponents: [
     PlacesComponent,
     PongComponent,
-    TestingComponent]
+    TestingComponent,
+    GamingLandingComponent]
 })
 export class AppModule { }

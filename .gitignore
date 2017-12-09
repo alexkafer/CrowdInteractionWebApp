@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 
 .awspublish-lightshow-web
+config.js

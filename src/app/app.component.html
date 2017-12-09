@@ -1,11 +1,32 @@
 
-<div *ngIf="!connected()">
-    Welcome to the CSE Winter Light Show! There doesn't appear to be a connection at the moment. Please refresh and try again.
+<div class="header">
+    <img class="logo" (click)="toggleDisplay()" alt="Tesla Works" src="http://www.teslaworks.net/assets/images/originals/logo_light.png">
+    <div class="connection">
+            <div class="message " *ngIf="state() == 1">
+                    <div class="status">Connected</div> <i class="material-icons connected">cloud</i>
+            </div>
+            <div class="message " *ngIf="state() == 3 || state() == 2">
+                    <div class="status">No Connection</div> <i class="material-icons not-connected">cloud_off</i>
+            </div>
+            <div class="message " *ngIf="state() ==  0 || state() ==  -1">
+                    <div class="status"> Loading. Please wait.</div> <i class="material-icons connecting">cloud_queue</i> 
+            </div>
+    </div>
 </div>
+<!-- <img class="lights" src="" alt=""> -->
+<!-- <div class="lights"></div> -->
+
+<div class="welcome">
+    <h1>
+        Welcome to the CSE Winter Light Show <br />
+        <small><a href="http://www.teslaworks.net">Presented by Tesla Works</a></small>   
+    </h1>
+   
+</div>
+
+<app-pixels *ngIf="display"></app-pixels>
 
 <ng-template appModeDisplay>
         
 </ng-template>
-
-{{mode}}
 

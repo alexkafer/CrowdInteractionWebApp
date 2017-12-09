@@ -12,7 +12,9 @@ export class PixelsComponent implements OnInit {
   public pixels = [];
   public mode = new Observable();
 
-  constructor(public px: PixelManagerService) { }
+  public touchColorHandler = null;
+
+  constructor(private px: PixelManagerService) { }
 
   ngOnInit() {
     this.mode = this.px.mode.asObservable();
@@ -21,5 +23,11 @@ export class PixelsComponent implements OnInit {
     this.px.pixels.subscribe((num) => {
       this.pixels = num;
     });
+  }
+
+  public toggleColor(row, col) {
+    if (this.touchColorHandler != null) {
+      this.touchColorHandler(row, col)
+    }
   }
 }

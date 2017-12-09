@@ -14,4 +14,12 @@ export class PongComponent implements OnInit {
     
   }
 
+  public up() {
+    this.px.sendButtonUpdate(1);
+  }
+
+  public down() {
+    this.px.sendButtonUpdate(0);
+  }
+
 }

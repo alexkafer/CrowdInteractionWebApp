@@ -1,6 +1,12 @@
-<p>
+<p *ngIf="(waiting | async) == -1">
 
-  Do you intend to play the GAME OF KINGS?!
+  We are currently playing pong on the Net Lights. Would you like to get added to the waiting list?
 
   <button (click)="intendToPlay()">Yes. Bring it on.</button>
+</p>
+
+<p *ngIf="(waiting | async)">
+      You are in position {{waiting | async }} on the waiting list. Turns rotate at the end of the game. 
+
+      (If you want to be removed from the list, just close the window)
 </p>

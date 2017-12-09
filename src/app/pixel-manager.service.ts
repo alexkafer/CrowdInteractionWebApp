@@ -12,8 +12,10 @@ export class PixelManagerService {
   public pixels = new BehaviorSubject<any>([]); // = 'places';
   public mode = new Subject<string>(); // = 'places';
 
-  // private ws = new $WebSocket("ws://ec2-18-220-127-31.us-east-2.compute.amazonaws.com:8000");
-  private ws = new $WebSocket("ws://localhost:8000");
+  public waiting = new BehaviorSubject<any>(-1); // = 'places';
+
+  private ws = new $WebSocket("ws://ec2-18-220-127-31.us-east-2.compute.amazonaws.com:8000");
+  // private ws = new $WebSocket("ws://localhost:8000");
 
   constructor(private http: HttpClient) { 
     this.ws.onMessage(
@@ -27,6 +29,9 @@ export class PixelManagerService {
             case "mode_change":
               this.mode.next(message.mode);
               break;
+            case "player_position":
+              this.waiting.next(message.position);
+              break;
           }
       },
       {autoApply: false}  ); 
@@ -34,8 +39,8 @@ export class PixelManagerService {
 
   public init() {
     // Make the initial HTTP request to populate data:
-    // this.http.get('http://ec2-18-220-127-31.us-east-2.compute.amazonaws.com')
-    this.http.get('http://localhost:8080')
+    this.http.get('http://ec2-18-220-127-31.us-east-2.compute.amazonaws.com')
+    // this.http.get('http://localhost:8080')
     .subscribe(
       (data: any) => {
         this.pixels.next(data.pixels);

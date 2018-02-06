@@ -18,5 +18,6 @@ export class GamingLandingComponent implements OnInit {
   }
 
   public intendToPlay() {
+    this.px.intendToPlay();
   }
 }

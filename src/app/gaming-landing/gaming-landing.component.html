@@ -5,8 +5,8 @@
   <button (click)="intendToPlay()">Yes. Bring it on.</button>
 </p>
 
-<p *ngIf="(waiting | async)">
-      You are in position {{waiting | async }} on the waiting list. Turns rotate at the end of the game. 
+<p *ngIf="(waiting | async) > 0">
+      You are in position {{waiting | async }} on the waiting list. The turns will rotate once a player dies. 
 
       (If you want to be removed from the list, just close the window)
 </p>

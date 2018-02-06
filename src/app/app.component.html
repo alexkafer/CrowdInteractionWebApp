@@ -24,6 +24,10 @@
    
 </div>
 
+<div *ngIf="state() == 3 || state() == 2">
+        There doesn't appear to be a connection at the moment. Please refresh and try again.
+</div>
+
 <app-pixels *ngIf="display"></app-pixels>
 
 <ng-template appModeDisplay>
